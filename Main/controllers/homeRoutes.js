@@ -29,8 +29,10 @@ router.get('/', async (req, res) => {
 
 router.get('/browse', async (req, res) => {
   try {
+    console.log('------------ ????? ')
     // Get all projects and JOIN with user data
     const tvshowData = await TVShow.findAll();
+    console.log('!!!!!      ', tvshowData);
 
     // Serialize data so the template can read it
     const tvshows = tvshowData.map((tvshow) => tvshow.get({ plain: true }));
