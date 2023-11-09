@@ -27,6 +27,24 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/browse', async (req, res) => {
+  try {
+    // Get all projects and JOIN with user data
+    const tvshowData = await TVShow.findAll();
+
+    // Serialize data so the template can read it
+    const tvshows = tvshowData.map((tvshow) => tvshow.get({ plain: true }));
+
+    // Pass serialized data and session flag into template
+    res.render('browse', { 
+      tvshows, 
+      logged_in: req.session.logged_in 
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 router.get('/tvshow/:id', async (req, res) => {
   try {
     const tvshowData = await TVShow.findByPk(req.params.id, {
